@@ -1,0 +1,31 @@
+- hosts: localhost
+  vars:
+   folder_path: /home/osgdev/ansilab/block
+  tasks:
+  - name: Folder and File Creation
+    block:
+    - name: Debug activity
+      debug: msg='working on creating folder and file'
+    - name: To Create a folder
+      file:
+          path: "{{folder_path}}/NEWSAMPLE2"
+          owner: osgdev
+          group: docker
+          state: directory
+          mode: 0755
+    - name: To Create a file
+      file:
+         path: "{{folder_path}}/NEWSAMPLE1/new_file2"
+         state: touch
+      rescue:
+      - name: Need to correct error
+        debug: msg='Caught an error'
+      - name: To Create a file
+        file:
+          path: "{{folder_path}}/NEWSAMPLE2/new_file2"
+          state: touch
+      - name: Error corrected
+        debug: msg='Error Rectified'
+      always:
+      - name: Executing always
+        debug: msg='Happy ending'

@@ -1,0 +1,16 @@
+- hosts: localhost
+  vars:
+   folder_path: /home/osgdev/ansilab/block
+  tasks:
+  - block:
+    - name: To Create a folder
+      file:
+       path: "{{folder_path}}/NEWSAMPLE2"
+       owner: osgdev
+       group: docker
+       state: directory
+       mode: 0755
+    - name: To Create a file
+      file:
+        path: "{{folder_path}}/NEWSAMPLE2/new_file2"
+        state: touch
